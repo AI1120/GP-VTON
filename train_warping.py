@@ -197,7 +197,7 @@ for epoch in range(start_epoch, opt.niter + opt.niter_decay + 1):
 
         epsilon = 0.001
         loss_smooth = 0
-        loss_smooth = sum([TVLoss(x*part_mask) for x in delta_list])
+        loss_smooth = sum(TVLoss(x*part_mask) for x in delta_list)
 
         loss_all = 0
         loss_l1_total = 0
