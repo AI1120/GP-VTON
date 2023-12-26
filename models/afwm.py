@@ -66,7 +66,8 @@ def SquareTVLoss(flow):
 
     return torch.mean(left_top_diff+left_bottom_diff+right_top_diff+right_bottom_diff)
 
-def SquareTVLoss_v2(flow, interval_list=[1,5]):
+def SquareTVLoss_v2(flow, interval_list=None):
+    interval_list = [1,5] if interval_list is None else interval_list
     flow_x, flow_y = torch.split(flow, 1, dim=1)
 
     tvloss = 0
@@ -126,7 +127,8 @@ class DownSample(nn.Module):
 
 
 class FeatureEncoder(nn.Module):
-    def __init__(self, in_channels, chns=[64, 128, 256, 256, 256]):
+    def __init__(self, in_channels, chns=None):
+        chns = [64, 128, 256, 256, 256] if chns is None else chns
         # in_channels = 3 for images, and is larger (e.g., 17+1+1) for agnositc representation
         super(FeatureEncoder, self).__init__()
         self.encoders = []
@@ -153,7 +155,8 @@ class FeatureEncoder(nn.Module):
 
 
 class RefinePyramid(nn.Module):
-    def __init__(self, chns=[64, 128, 256, 256, 256], fpn_dim=256):
+    def __init__(self, chns=None, fpn_dim=256):
+        chns = [64, 128, 256, 256, 256] if chns is None else chns
         super(RefinePyramid, self).__init__()
         self.chns = chns
 
