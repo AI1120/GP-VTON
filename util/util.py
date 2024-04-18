@@ -1,4 +1,3 @@
-from __future__ import print_function
 from cv2 import sort
 from importlib_metadata import files
 
