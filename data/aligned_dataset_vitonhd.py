@@ -1,5 +1,4 @@
 import os
-from random import random
 from data.base_dataset import BaseDataset, get_params, get_transform
 from PIL import Image
 import torch
@@ -9,6 +8,7 @@ import cv2
 import pycocotools.mask as maskUtils
 import math
 import json
+import secrets
 
 class AlignedDataset(BaseDataset):
     def initialize(self, opt):
@@ -234,14 +234,14 @@ class AlignedDataset(BaseDataset):
                 preserve_mask_for_loss_np = np.array([(parsing_np==index).astype(int) for index in [1,2,3,4,7,8,9,10,12,13,14,17,18,19,20,23,26,27,28]])
                 preserve_mask_for_loss_np = np.sum(preserve_mask_for_loss_np,axis=0)
             elif pc_ratio < 0.95:
-                if random() < 0.5:
+                if secrets.SystemRandom().random() < 0.5:
                     preserve_mask_for_loss_np = np.array([(parsing_np==index).astype(int) for index in [1,2,3,4,7,8,9,10,12,13,14,17,18,19,20,23,26,27,28]])
                     preserve_mask_for_loss_np = np.sum(preserve_mask_for_loss_np,axis=0)
                 else:
                     preserve_mask_for_loss_np = np.array([(parsing_np==index).astype(int) for index in [1,2,3,4,7,12,14,23,26,27]])
                     preserve_mask_for_loss_np = np.sum(preserve_mask_for_loss_np,axis=0)
             else:
-                if random() < 0.1:
+                if secrets.SystemRandom().random() < 0.1:
                     preserve_mask_for_loss_np = np.array([(parsing_np==index).astype(int) for index in [1,2,3,4,7,8,9,10,12,13,14,17,18,19,20,23,26,27,28]])
                     preserve_mask_for_loss_np = np.sum(preserve_mask_for_loss_np,axis=0)
                 else:
